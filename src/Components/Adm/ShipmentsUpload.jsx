@@ -3,7 +3,7 @@ import { useApi } from '../../Context/ApiProvider';
 
 const ShipmentsUpload = () => {
 
-    const { shipments, isLoading } = useApi();
+    const { shipments, isLoading, dev, prod } = useApi();
 
     const [newShipment, setNewShipment] = useState({ lugar: '', dia: '' });
     const [updatedShipments, setUpdatedShipments] = useState([]);
@@ -39,7 +39,7 @@ const ShipmentsUpload = () => {
     const handleUpdate = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('http://localhost/DistribuidoraDarrona/Darrona/API/actualizar.php?action=shipments', {
+            const response = await fetch(`http://${prod}/API/actualizar.php?action=shipments`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

@@ -3,7 +3,7 @@ import { useApi } from '../../Context/ApiProvider';
 
 const ContactUpload = () => {
 
-    const { contact, isLoading } = useApi();
+    const { contact, isLoading, dev, prod } = useApi();
     const [uploadStatus, setUploadStatus] = useState('');
 
     const [newDirecc, setNewDirecc] = useState('');
@@ -29,7 +29,7 @@ const ContactUpload = () => {
         };
 
         try {
-            const response = await fetch('http://localhost:80/DistribuidoraDarrona/Darrona/API/actualizar.php?action=shipments', {
+            const response = await fetch(`http://${prod}/API/index.php?action=shipments`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

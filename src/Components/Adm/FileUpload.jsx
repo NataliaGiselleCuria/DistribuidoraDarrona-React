@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import { useApi } from '../../Context/ApiProvider';
 
 const FileUpload = () => {
+  const { dev, prod } = useApi()
   const [file, setFile] = useState(null);
   const [uploadStatus, setUploadStatus] = useState('');
 
@@ -22,7 +24,7 @@ const FileUpload = () => {
     formData.append('fileInput', file);
 
     try {
-      const response = await fetch('http://localhost/DistribuidoraDarrona/Darrona/API/upload.php', {
+      const response = await fetch(`http://${prod}/API/upload.php`, {
         method: 'POST',
         body: formData
       });

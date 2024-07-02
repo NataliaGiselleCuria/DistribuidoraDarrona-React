@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { ApiContext } from '../../Context/ApiProvider';
+import { useApi } from '../../Context/ApiProvider';
 
 const LoginUpload = () => {
 
+  const { dev, prod } = useApi()
   const [newUser, setNewUser] = useState('');
   const [newPass, setNewPass] = useState('');
 
@@ -17,7 +18,7 @@ const LoginUpload = () => {
     }
 
     try {
-        const response = await fetch('http://localhost/DistribuidoraDarrona/Darrona/API/actualizar.php?action=cred', {
+        const response = await fetch(`http://${prod}/API/actualizar.php?action=cred`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

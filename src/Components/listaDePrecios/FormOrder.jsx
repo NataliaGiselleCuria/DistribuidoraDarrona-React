@@ -14,7 +14,7 @@ const FormOrder = () => {
 
     const { tableType } = useContext(DataContext)
     const { order, totalOrder } = useContext(OrderContext)
-    const { contact, amountsValues } = useApi();
+    const { contact, amountsValues, dev, prod } = useApi();
     const [ loading, setLoading ] = useState(false);
     const [ message, setMessage ] = useState('');
     const [ showOkButton, setShowOkButton ] = useState(false);
@@ -79,8 +79,8 @@ const FormOrder = () => {
             ...cont
         };
 
-        try {
-            const response = await fetch('http://localhost/DistribuidoraDarrona/Darrona/API/index.php?action=save-order', {
+        try {   
+            const response = await fetch(`http://${prod}/API/index.php?action=save-order`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

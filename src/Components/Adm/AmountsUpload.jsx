@@ -3,7 +3,7 @@ import { useApi } from '../../Context/ApiProvider';
 
 const AmountsUpload = () => {
 
-    const { amounts, amountsValues, isLoading } = useApi();
+    const { amounts, amountsValues, isLoading, dev, prod } = useApi();
 
     //msg
     const [newMinorista, setNewMinorista] = useState('');
@@ -54,7 +54,7 @@ const AmountsUpload = () => {
         }
 
         try {
-            const response = await fetch('http://localhost/DistribuidoraDarrona/Darrona/API/actualizar.php?action=amounts', {
+            const response = await fetch(`http://${prod}/API/index.php?action=save-order`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

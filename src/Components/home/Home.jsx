@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Footer from '../footer/Footer';
 import './home.css';
 import { useApi } from '../../Context/ApiProvider';
+import logo from '../../assets/Darrona.png';
 
 
 const Home = ({ setTableType }) => {
@@ -27,7 +28,7 @@ const Home = ({ setTableType }) => {
     <div className='home'>
        <div className='nav'></div>
       <section className="cont">
-        <div className="img-cont"><img src="\src\assets\Darrona.png" alt="Logo Distribuidora Darrona - Alimentos Naturales."></img></div>
+        <div className="img-cont"><img src={logo} alt="Logo Distribuidora Darrona - Alimentos Naturales."></img></div>
         <h1><span>LISTA DE PRECIOS </span><span> DISTRIBUIDORA DARRONA</span></h1>
         <div className="buttons">
           <span>

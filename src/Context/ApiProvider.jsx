@@ -13,8 +13,11 @@ export const ApiProvider = ({ children }) => {
   const [shipments, setShipments] = useState([]);
   const [listOrders, setListOrders] = useState([]);
 
+  const dev = 'localhost/DistribuidoraDarrona/Darrona';
+  const prod = 'darrona-api.free.nf'
+
   useEffect(() => {
-    fetch('http://localhost/DistribuidoraDarrona/Darrona/API/index.php?action=productos')
+    fetch(`http://${prod}/API/index.php?action=productos`)  
      .then(response => response.json())
      .then(data => {
         setProducts(data);
@@ -22,7 +25,7 @@ export const ApiProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    fetch('http://localhost/DistribuidoraDarrona/Darrona/API/index.php?action=montominimo')      
+    fetch(`http://${prod}/API/index.php?action=montominimo`)      
     .then(response => response.json())
      .then(data => {
         setAmounts(data);
@@ -31,7 +34,7 @@ export const ApiProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    fetch('http://localhost/DistribuidoraDarrona/Darrona/API/index.php?action=montos')      
+    fetch(`http://${prod}/API/index.php?action=montos`)      
     .then(response => response.json())
      .then(data => {
         setAmountsValues(data);
@@ -40,7 +43,7 @@ export const ApiProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    fetch('http://localhost/DistribuidoraDarrona/Darrona/API/index.php?action=login')      
+    fetch(`http://${prod}/API/index.php?action=login`)      
     .then(response => response.json())
      .then(data => {
       setLoginCred(data);
@@ -48,7 +51,7 @@ export const ApiProvider = ({ children }) => {
   }, [])
   
   useEffect(() => {
-    fetch('http://localhost/DistribuidoraDarrona/Darrona/API/index.php?action=contact')      
+    fetch(`http://${prod}/API/index.php?action=contact`)      
     .then(response => response.json())
      .then(data => {
       setContact(data);
@@ -56,7 +59,7 @@ export const ApiProvider = ({ children }) => {
   }, [])
 
   useEffect(() => {
-    fetch('http://localhost/DistribuidoraDarrona/Darrona/API/index.php?action=shipments')      
+    fetch(`http://${prod}/API/index.php?action=shipments`)      
     .then(response => response.json())
      .then(data => {
       setShipments(data);
@@ -64,7 +67,7 @@ export const ApiProvider = ({ children }) => {
   }, [])
 
   useEffect(() => {
-    fetch('http://localhost/DistribuidoraDarrona/Darrona/API/index.php?action=orders')      
+    fetch(`http://${prod}/API/index.php?action=orders`)      
     .then(response => response.json())
      .then(data => {
       setListOrders(data);
@@ -80,7 +83,7 @@ export const ApiProvider = ({ children }) => {
     }
 
     try {
-        const response = await fetch('http://localhost/DistribuidoraDarrona/Darrona/API/index.php?action=update-seen-status', {
+        const response = await fetch(`http://${prod}/API/index.php?action=update-seen-status`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -111,7 +114,9 @@ export const ApiProvider = ({ children }) => {
     contact,
     shipments,
     listOrders,
-    updateSeenStatus
+    updateSeenStatus,
+    dev,
+    prod
   }), 
   [
     products,
@@ -122,7 +127,9 @@ export const ApiProvider = ({ children }) => {
     contact,
     shipments,
     listOrders,
-    updateSeenStatus
+    updateSeenStatus,
+    dev,
+    prod
   ]);
 
   return (
