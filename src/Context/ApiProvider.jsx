@@ -18,7 +18,7 @@ export const ApiProvider = ({ children }) => {
 
   useEffect(() => {
     fetch(`https://${prod}/API/index.php?action=productos`, {
-      mode:'no-cors'
+      mode:'cors'
   })  
     .then(response => {
       if (!response.ok) {
