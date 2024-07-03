@@ -18,7 +18,7 @@ const LoginUpload = () => {
     }
 
     try {
-        const response = await fetch(`http://${prod}/API/actualizar.php?action=cred`, {
+        const response = await fetch(`https://${prod}/API/actualizar.php?action=cred`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

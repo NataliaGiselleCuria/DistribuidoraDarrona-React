@@ -17,7 +17,7 @@ export const ApiProvider = ({ children }) => {
   const prod = 'darrona-api.free.nf'
 
   useEffect(() => {
-    fetch(`http://${prod}/API/index.php?action=productos`)  
+    fetch(`https://${prod}/API/index.php?action=productos`)  
      .then(response => response.json())
      .then(data => {
         setProducts(data);
@@ -25,7 +25,7 @@ export const ApiProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    fetch(`http://${prod}/API/index.php?action=montominimo`)      
+    fetch(`https://${prod}/API/index.php?action=montominimo`)      
     .then(response => response.json())
      .then(data => {
         setAmounts(data);
@@ -34,7 +34,7 @@ export const ApiProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    fetch(`http://${prod}/API/index.php?action=montos`)      
+    fetch(`https://${prod}/API/index.php?action=montos`)      
     .then(response => response.json())
      .then(data => {
         setAmountsValues(data);
@@ -43,7 +43,7 @@ export const ApiProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    fetch(`http://${prod}/API/index.php?action=login`)      
+    fetch(`https://${prod}/API/index.php?action=login`)      
     .then(response => response.json())
      .then(data => {
       setLoginCred(data);
@@ -51,7 +51,7 @@ export const ApiProvider = ({ children }) => {
   }, [])
   
   useEffect(() => {
-    fetch(`http://${prod}/API/index.php?action=contact`)      
+    fetch(`https://${prod}/API/index.php?action=contact`)      
     .then(response => response.json())
      .then(data => {
       setContact(data);
@@ -59,7 +59,7 @@ export const ApiProvider = ({ children }) => {
   }, [])
 
   useEffect(() => {
-    fetch(`http://${prod}/API/index.php?action=shipments`)      
+    fetch(`https://${prod}/API/index.php?action=shipments`)      
     .then(response => response.json())
      .then(data => {
       setShipments(data);
@@ -67,7 +67,7 @@ export const ApiProvider = ({ children }) => {
   }, [])
 
   useEffect(() => {
-    fetch(`http://${prod}/API/index.php?action=orders`)      
+    fetch(`https://${prod}/API/index.php?action=orders`)      
     .then(response => response.json())
      .then(data => {
       setListOrders(data);
@@ -83,7 +83,7 @@ export const ApiProvider = ({ children }) => {
     }
 
     try {
-        const response = await fetch(`http://${prod}/API/index.php?action=update-seen-status`, {
+        const response = await fetch(`https://${prod}/API/index.php?action=update-seen-status`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

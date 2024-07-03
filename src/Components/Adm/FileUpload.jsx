@@ -24,7 +24,7 @@ const FileUpload = () => {
     formData.append('fileInput', file);
 
     try {
-      const response = await fetch(`http://${prod}/API/upload.php`, {
+      const response = await fetch(`https://${prod}/API/upload.php`, {
         method: 'POST',
         body: formData
       });
