@@ -18,59 +18,116 @@ export const ApiProvider = ({ children }) => {
 
   useEffect(() => {
     fetch(`https://${prod}/API/index.php?action=productos`)  
-     .then(response => response.json())
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
      .then(data => {
         setProducts(data);
+      })
+      .catch(error => {
+        console.error('There has been a problem with your fetch operation:', error);
       });
+      
   }, []);
 
   useEffect(() => {
     fetch(`https://${prod}/API/index.php?action=montominimo`)      
-    .then(response => response.json())
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
      .then(data => {
         setAmounts(data);
         setIsLoading(false);
+    })
+    .catch(error => {
+      console.error('There has been a problem with your fetch operation:', error);
     });
   }, []);
 
   useEffect(() => {
     fetch(`https://${prod}/API/index.php?action=montos`)      
-    .then(response => response.json())
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
      .then(data => {
         setAmountsValues(data);
         setIsLoading(false);
+    })
+    .catch(error => {
+      console.error('There has been a problem with your fetch operation:', error);
     });
   }, []);
 
   useEffect(() => {
     fetch(`https://${prod}/API/index.php?action=login`)      
-    .then(response => response.json())
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
      .then(data => {
       setLoginCred(data);
+    })
+    .catch(error => {
+      console.error('There has been a problem with your fetch operation:', error);
     });
   }, [])
   
   useEffect(() => {
     fetch(`https://${prod}/API/index.php?action=contact`)      
-    .then(response => response.json())
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
      .then(data => {
       setContact(data);
+    })
+    .catch(error => {
+      console.error('There has been a problem with your fetch operation:', error);
     });
   }, [])
 
   useEffect(() => {
     fetch(`https://${prod}/API/index.php?action=shipments`)      
-    .then(response => response.json())
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
      .then(data => {
       setShipments(data);
+    })
+    .catch(error => {
+      console.error('There has been a problem with your fetch operation:', error);
     });
   }, [])
 
   useEffect(() => {
     fetch(`https://${prod}/API/index.php?action=orders`)      
-    .then(response => response.json())
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
      .then(data => {
       setListOrders(data);
+    })
+    .catch(error => {
+      console.error('There has been a problem with your fetch operation:', error);
     });
   }, [])
 
