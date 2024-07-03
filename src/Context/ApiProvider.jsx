@@ -17,7 +17,9 @@ export const ApiProvider = ({ children }) => {
   const prod = 'darrona-api.free.nf'
 
   useEffect(() => {
-    fetch(`https://${prod}/API/index.php?action=productos`)  
+    fetch(`https://${prod}/API/index.php?action=productos`, {
+      mode:'no-cors'
+  })  
     .then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
