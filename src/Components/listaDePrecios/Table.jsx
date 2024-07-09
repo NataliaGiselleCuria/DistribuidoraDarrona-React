@@ -117,8 +117,8 @@ const Table = ( {showOrder, isFinalized} ) => {
           <tr>
             <th className='cd'>CÓDIGO</th>
             <th className='th-prod'>PRODUCTO</th>
-            <th className='center'>Unidad de medida</th>
-            <th className='center'>Cantidad x pres.</th>
+            <th className='center'>U. de medida</th>
+            <th className='center'>Cant. x pres.</th>
             <th className='center'>Peso X pres.</th>
             <th>Precio Unitario</th>
             <th>Precio x pres.</th>

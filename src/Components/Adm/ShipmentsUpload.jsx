@@ -39,7 +39,7 @@ const ShipmentsUpload = () => {
     const handleUpdate = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch(`https://${prod}/API/actualizar.php?action=shipments`, {
+            const response = await fetch(`https://${dev}/API/actualizar.php?action=shipments`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

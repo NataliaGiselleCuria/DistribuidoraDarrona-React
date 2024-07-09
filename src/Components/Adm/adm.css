@@ -5,6 +5,7 @@ section.cont.adm.login{
     background-image: url('../../Components/home/assets/pexels-andreea-ch-371539-3969097.jpg');
     background-size: cover;
     background-position: bottom;
+    justify-content: center;
 }
 
 section.cont.adm.login.authenticated{
@@ -300,6 +301,8 @@ form.csv input {
 
 form.csv div {
     display: flex;
+    flex-direction: column;
+    gap: 5px;
     align-items: flex-start;
     justify-content: space-around;
 }
@@ -522,6 +525,12 @@ span.order-head {
       }
     }
   }
+}
+
+button.delete {
+    margin: 0!important;
+    background: none;
+    height: 28px!important;
 }
 
 li.order-item.new-order {

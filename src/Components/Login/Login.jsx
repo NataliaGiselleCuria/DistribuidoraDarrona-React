@@ -3,6 +3,8 @@ import '../../index.css';
 import { useApi } from '../../Context/ApiProvider';
 import Adm from '../Adm/Adm.jsx';
 import CryptoJS from 'crypto-js';
+import logo from '../../assets/Darrona.png';
+import Mobile from '../Mobile.jsx';
 
 
 
@@ -38,7 +40,7 @@ const Login = () => {
             <section className={`cont adm login ${isAuthenticated ? 'authenticated' : ''}`}>
             {!isAuthenticated ? (
                 <>
-                <div className="img-cont"><img src="\src\assets\Darrona.png" alt="Logo Distribuidora Darrona - Alimentos Naturales."></img></div>
+                <div className="img-cont"><img src={logo} alt="Logo Distribuidora Darrona - Alimentos Naturales."></img></div>
                 <h1><span>DISTRIBUIDORA DARRONA</span><span>HERRAMIENTA DE ADMINISTRADOR</span></h1>
                 <form onSubmit={handleLogin}>
                     <span className="label">
@@ -79,7 +81,9 @@ const Login = () => {
             </>
             )}
             </section>
-           
+            <section className='cont-mobile'>
+                <Mobile/>
+            </section>
         </>
     );
 };

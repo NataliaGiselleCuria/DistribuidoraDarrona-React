@@ -129,8 +129,10 @@ button.button-list.add-more-p:hover {
 .categories-cont {
     text-align: start;
     padding-inline-start: 3%;
-    width: 12%;
-    background-image: url(C:\xampp\htdocs\DistribuidoraDarrona\Darrona\src\assets\bg2.png);
+    width: 11%;
+    min-width: 180px;
+    margin-right: 5px;
+    background-image: url(../../assets/bg2.png);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: -210px;
@@ -194,8 +196,7 @@ button.button-list.add-more-p:hover {
     height: 25px;
     gap: 5px;
     margin-bottom: 25px;
-    width: 75%;
-    margin-left: 10px;
+    width: 85%;
 }
 
 .search-bar img {
@@ -217,9 +218,9 @@ input.inputSearch {
 
 /* tablas */
 .cont-table {
-    height: 90%;
+    height: 95%;
     width: 85%;
-    padding-left: 10px;
+    padding-left: 4%;
     overflow: auto;
     scroll-behavior: smooth;
 }
@@ -435,4 +436,102 @@ span.msg-send-order {
 
 .inicio img{
     height: 50%;
+}
+
+@media (max-width: 1280px){
+
+    .nav-lis {
+        height: 65px;
+    }
+
+    /* categories */
+
+    .cont-products{
+        flex-direction: column;
+    }
+
+    .categories-cont {
+        width: 94%;
+        display: flex;
+        flex-direction: column;
+        background: none;
+        padding-inline-start: 2%;
+    }
+
+    span.cat {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        margin-bottom: 15px;
+        position: relative;
+    }
+
+    .cat .toggle-btn{
+        left: 15px;
+        width: 20px;
+    }
+
+    .cat .arrow-open-close {
+        width: 15px;
+    }
+
+    .arrow-open-close {
+        &:before, &:after {
+            height: 3px;
+            background: #ded4ba;
+            width: 60%;
+        }
+    }
+
+    .categories-cont h2{
+        margin-bottom: 0;
+        margin-top:0;
+        padding-left: 38px;
+    }
+
+    .search-bar{
+        margin: 0;
+        width: 25%;
+    }
+
+    ul {
+        display: grid;
+        grid-template-rows: repeat(4, auto);
+        grid-auto-flow: column;
+        padding-inline-start: 40px!important;
+        margin-top: 0;
+    }
+
+    /* table */
+
+    .cont-table {
+        width: 97%;
+        padding-left: 3%;
+    }
+
+    thead tr th {
+        font-size: 13px;
+    }
+
+    th.cd {
+        width: 70px;
+    }
+
+    .total {
+        padding-left: 15px;
+        width: 100px;
+    }
+
+     /* float */
+    .whatsapp, .inicio {
+        width: 40px;
+        height: 40px;
+        right: 13px;
+    }
+}
+
+@media (max-width: 1120px){
+    thead tr th {
+        font-size: 12px;
+    }
 }

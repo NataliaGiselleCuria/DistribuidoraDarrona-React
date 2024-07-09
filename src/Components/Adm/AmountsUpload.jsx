@@ -54,7 +54,7 @@ const AmountsUpload = () => {
         }
 
         try {
-            const response = await fetch(`https://${prod}/API/index.php?action=save-order`, {
+            const response = await fetch(`https://${dev}/API/index.php?action=save-order`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

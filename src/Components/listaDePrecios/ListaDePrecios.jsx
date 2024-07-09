@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { OrderContext } from '../../Context/OrderProvider';
 import './listaDePrecio.css';
@@ -12,17 +12,20 @@ import ProductSearch from './ProductSearch';
 import { useApi } from '../../Context/ApiProvider';
 import FormOrder from './FormOrder';
 import Nav from '../footer/Nav';
+import Mobile from '../Mobile';
 
 
 const ListaDePrecios = ({ tableType }) => {
 
   const navigate = useNavigate();
   const handleBackClick = () => {
+    resetOrder();
     navigate('/');
+   
   };
 
   const { amounts, isLoading } = useApi();
-  const { totalOrderFormat } = useContext(OrderContext)
+  const { totalOrderFormat, resetOrder } = useContext(OrderContext)
   const [showOrder, setShowOrder] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [isFinalized, setIsFinalized] = useState(false);
@@ -46,6 +49,23 @@ const ListaDePrecios = ({ tableType }) => {
     setShowForm(true);
     setIsFinalized(true);
   };
+
+  const [expanded, setExpanded] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(window.innerWidth <= 1280);
+
+  const toggleExpand = () => {
+    setExpanded(!expanded);
+  };
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsExpanded(window.innerWidth <= 1280);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+  
 
   return (
     <div className='lista-precios'>
@@ -83,10 +103,28 @@ const ListaDePrecios = ({ tableType }) => {
         </div>
         <div className='cont-products'>         
           <div className='categories-cont'>
-            <h2>CATEGORIAS</h2>
-            <ProductSearch></ProductSearch>
-            <Categories></Categories>
-          </div> 
+            {isExpanded ? (
+              <>
+                <span className="cat">
+                  <div 
+                    className={`toggle-btn clearfix ${expanded ? 'hide-toggle' : ''}`} 
+                    onClick={toggleExpand}
+                  >
+                    <div className="arrow-open-close"></div>
+                  </div>
+                  <h2>CATEGORIAS</h2>
+                  <ProductSearch />
+                </span>
+                {expanded && <Categories />}
+              </>
+            ) : (
+              <>
+                <h2>CATEGORIAS</h2>
+                <ProductSearch />
+                <Categories />
+              </>
+            )}
+          </div>     
           <div className='cont-table'>
             {showForm && <FormOrder />}
             <Table showOrder={showOrder}  isFinalized={isFinalized} />
@@ -94,6 +132,9 @@ const ListaDePrecios = ({ tableType }) => {
         </div>
         <a href="#inicio" className="inicio"><img src={arrow} alt="icono de flecha hacia arriba para volver a la parte superior de la página"></img></a>
         <a href="https://wa.me/+5492214970274?text=Hola%20Darrona!%20" className="whatsapp" target="_blank"><img src={wp} alt="icono de whatsapp"></img></a>
+      </section>
+      <section className='cont-mobile'>
+        <Mobile/>
       </section>
     </div>
   );

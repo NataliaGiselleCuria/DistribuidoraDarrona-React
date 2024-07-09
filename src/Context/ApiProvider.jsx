@@ -13,11 +13,11 @@ export const ApiProvider = ({ children }) => {
   const [shipments, setShipments] = useState([]);
   const [listOrders, setListOrders] = useState([]);
 
-  const dev = 'localhost/DistribuidoraDarrona/Darrona';
-  const prod = 'darrona-api.free.nf'
+  const dev = 'localhost/DistribuidoraDarrona';
+  const prod = 'darrona-pedidos.free.nf'
 
   useEffect(() => {
-    fetch(`https://${prod}/API/index.php?action=productos`, {
+    fetch(`https://${dev}/API/index.php?action=productos`, {
       mode:'cors'
   })  
     .then(response => {
@@ -36,7 +36,7 @@ export const ApiProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    fetch(`https://${prod}/API/index.php?action=montominimo`)      
+    fetch(`https://${dev}/API/index.php?action=montominimo`)      
     .then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -53,7 +53,7 @@ export const ApiProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    fetch(`https://${prod}/API/index.php?action=montos`)      
+    fetch(`https://${dev}/API/index.php?action=montos`)      
     .then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -70,7 +70,7 @@ export const ApiProvider = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    fetch(`https://${prod}/API/index.php?action=login`)      
+    fetch(`https://${dev}/API/index.php?action=login`)      
     .then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -86,7 +86,7 @@ export const ApiProvider = ({ children }) => {
   }, [])
   
   useEffect(() => {
-    fetch(`https://${prod}/API/index.php?action=contact`)      
+    fetch(`https://${dev}/API/index.php?action=contact`)      
     .then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -102,7 +102,7 @@ export const ApiProvider = ({ children }) => {
   }, [])
 
   useEffect(() => {
-    fetch(`https://${prod}/API/index.php?action=shipments`)      
+    fetch(`https://${dev}/API/index.php?action=shipments`)      
     .then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -118,7 +118,7 @@ export const ApiProvider = ({ children }) => {
   }, [])
 
   useEffect(() => {
-    fetch(`https://${prod}/API/index.php?action=orders`)      
+    fetch(`https://${dev}/API/index.php?action=orders`)      
     .then(response => {
       if (!response.ok) {
         throw new Error('Network response was not ok');
@@ -133,6 +133,26 @@ export const ApiProvider = ({ children }) => {
     });
   }, [])
 
+  const deleteOrder = async (orderId) => {
+    try {
+      const response = await fetch(`https://${dev}/API/index.php?action=delete-order`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id_pedido: orderId })
+      });
+
+      if (response.ok) {
+        const updatedOrders = listOrders.filter(order => order.id_pedido !== orderId);
+        setListOrders(updatedOrders);
+      } else {
+        console.error('Failed to delete order');
+      }
+    } catch (error) {
+      console.error('Error deleting order:', error);
+    }
+  };
 
   const updateSeenStatus = async (orderId, seen) => {
  
@@ -142,7 +162,7 @@ export const ApiProvider = ({ children }) => {
     }
 
     try {
-        const response = await fetch(`https://${prod}/API/index.php?action=update-seen-status`, {
+        const response = await fetch(`https://${dev}/API/index.php?action=update-seen-status`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -174,6 +194,7 @@ export const ApiProvider = ({ children }) => {
     shipments,
     listOrders,
     updateSeenStatus,
+    deleteOrder,
     dev,
     prod
   }), 
@@ -187,6 +208,7 @@ export const ApiProvider = ({ children }) => {
     shipments,
     listOrders,
     updateSeenStatus,
+    deleteOrder,
     dev,
     prod
   ]);

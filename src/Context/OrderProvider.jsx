@@ -7,6 +7,9 @@ export const OrderProvider = ({ children }) => {
   const [order, setOrder] = useState([]);
   const [totalOrder, setTotalOrder] = useState(0);
 
+  const resetOrder = () => {
+    setOrder([]);
+  };
   
   const totalOrderFormat = totalOrder.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' });
 
@@ -48,8 +51,12 @@ export const OrderProvider = ({ children }) => {
 };
 
   useEffect(() => {
-    const total = order.reduce((acc, item) => acc + item.totalProduct, 0);
-    setTotalOrder(total);
+    if (order.length === 0) {
+      setTotalOrder(0);
+    } else {
+      const total = order.reduce((acc, item) => acc + item.totalProduct, 0);
+      setTotalOrder(total);
+    }
   }, [order]);
 
   const value = useMemo(() => ({
@@ -57,14 +64,16 @@ export const OrderProvider = ({ children }) => {
     addToOrder,
     totalOrder,
     totalOrderFormat,
-    removeFromOrder
+    removeFromOrder,
+    resetOrder
   }), 
   [
     order, 
     addToOrder,
     totalOrder,
     totalOrderFormat,
-    removeFromOrder
+    removeFromOrder,
+    resetOrder
   ]);
 
   return (

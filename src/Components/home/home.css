@@ -1,9 +1,10 @@
 
 
-.home .cont{
+.home .cont, .cont-mobile{
     background-image: url(/src/Components/home/assets/pexels-andreea-ch-371539-3969097.jpg);
     background-repeat: no-repeat;
     background-size: cover;
+    justify-content: center;
 }
 
 .img-cont {
@@ -26,13 +27,6 @@ h1{
 
 h1 span {
     height: 23px;
-}
-
-.footer span{
-    height: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .buttons {

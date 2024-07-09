@@ -3,10 +3,11 @@ import { useApi } from '../../Context/ApiProvider'
 import dw from '../../assets/download.png'
 import img from '../../assets/adm2.png'
 import * as XLSX from 'xlsx';
+import trash from '../../assets/trash.png'
 
 const ViewOrders = () => {
 
-    const { listOrders, updateSeenStatus } = useApi();
+    const { listOrders, updateSeenStatus, deleteOrder } = useApi();
     const [expandedOrder, setExpandedOrder] = useState(null);
 
     const toggleExpand = async (index, orderId) => {
@@ -14,6 +15,10 @@ const ViewOrders = () => {
             await updateSeenStatus(orderId, 1); // Marcar como visto al expandir
         }
         setExpandedOrder(expandedOrder === index ? null : index);
+    };
+
+    const handleDeleteOrder = async (orderId) => {
+        await deleteOrder(orderId);
     };
 
     const sortedOrders = listOrders?.slice().sort((a, b) => new Date(b.fecha_pedido) - new Date(a.fecha_pedido));
@@ -80,6 +85,7 @@ const ViewOrders = () => {
                                 >
                                     <div className="arrow-open-close"></div>
                                 </div>
+                                <button className='delete' onClick={() => handleDeleteOrder(order?.id_pedido)}><img src={trash} alt="icono eliminar"/></button>
                             </span>
                             {expandedOrder === index && (
                                 <>

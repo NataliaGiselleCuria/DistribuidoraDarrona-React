@@ -29,7 +29,7 @@ const ContactUpload = () => {
         };
 
         try {
-            const response = await fetch(`https://${prod}/API/index.php?action=shipments`, {
+            const response = await fetch(`https://${dev}/API/index.php?action=shipments`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
