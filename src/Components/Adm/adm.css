@@ -10,7 +10,10 @@ section.cont.adm.login{
 
 section.cont.adm.login.authenticated{
     background-image: none;
-    /* height: calc(100% - 30px); */
+}
+
+section.cont.adm.login.authenticated .img-cont{
+    height: 100%;
 }
 
 section.cont.adm.login form {
@@ -81,7 +84,7 @@ span.label.log-error, .recover-cred p {
 }
 
 section.cont.adm {
-    height: calc(100% - 10%);
+    height: calc(100dvh - 10px);
 }
 
 button.go-to-page {
@@ -98,10 +101,6 @@ button.go-to-page:hover {
     width: 100%;
     display: flex;
     gap: 10px;
-}
-
-label {
-    display: flex;
 }
 
 .adm-cont {
@@ -230,7 +229,7 @@ p.current-msg {
     border-bottom: 1px solid var(--claro);
     width: 66%;
     height: 20px;
-    font-family: 'Poppins';
+    font-family: 'Poppins', sans-serif;
     font-weight: 500;
     font-size: 15px;
 }
@@ -269,7 +268,7 @@ button.submit:hover{
 
 textarea {
     border: none;
-    font-family: 'Poppins';
+    font-family: 'Poppins', sans-serif;
     overflow: hidden;
     height: auto;
     width: 100%;
@@ -279,9 +278,7 @@ textarea:focus-visible{
     outline: none;
 }
 
-button.submit {
-    margin-top: 15px;
-}
+
 
 /* file Upload */
 
@@ -314,7 +311,7 @@ form.csv div {
     border: 1px solid var(--verde);
     border-radius: 3px;
     color: var(--verde);
-    font-family: 'Poppins';
+    font-family: 'Poppins', sans-serif;
     padding: 5px 7px;
    
 }
@@ -378,6 +375,7 @@ button.btn-adm.go-to-page a {
 .orders-cont {
     width: 70%;
     overflow: auto;
+    padding-left: 15px;
 }
 
 .orders-cont .title {
@@ -387,7 +385,6 @@ button.btn-adm.go-to-page a {
     align-items: center;
     padding-bottom: 5px;
     gap: 5px;
-    padding-left: 30px;
 }
 .orders-cont h3 {
     color: var(--verde);
@@ -409,6 +406,7 @@ button.btn-adm.go-to-page a {
     gap: 5px;
     width: 93%;
     margin: 0;
+    padding: 0!important;
 }
 
 .orders-cont li {
@@ -427,8 +425,6 @@ button.btn-adm.go-to-page a {
     border-bottom: 1px solid var(--claro);
 }
 
-
-
 span.order-head {
     position: relative;
     flex-direction: row!important;
@@ -444,7 +440,7 @@ span.order-head {
 
 span.order-head p, .order-cont span p {
     width: fit-content;
-    min-width: 25%;
+    min-width: 20%;
     text-align: left;
 }
 
@@ -461,15 +457,7 @@ strong {
     margin-right: 5px;
 }
 
-.order-cont span {
-    display: flex;
-    width: 100%;
-    gap: 100px;
-}
 
-span.order-head {
-    position: relative;
-}
 
 .arrow-open-close {
   position: relative;
@@ -568,10 +556,8 @@ span.order-detail table {
 }
 
 .order-cont button {
-    height: 32px;
-    font-family: 'Poppins';
+    font-family: 'Poppins', sans-serif;
     font-size: 14px;
-    margin-bottom: 25px;
     border: none;
     border-radius: 5px;
     padding: 5px;
@@ -582,6 +568,16 @@ span.order-detail table {
     gap: 5px;
 }
 
+.delete{
+    position: absolute;
+    right: -35px;
+}
+
+.download-order{
+    height: 40px;
+    margin-bottom: 10px;
+}
+
 .order-cont button:hover{
     box-shadow: 1px 2px 2px #817a5f96;
     background-color: var(--claro);
@@ -590,4 +586,149 @@ span.order-detail table {
 .order-cont button img {
     height: 100%;
     object-fit: scale-down;
+}
+
+@media only screen and (max-width: 968px) and (orientation: landscape) {
+
+    section.cont.adm {
+        height: 100%;
+    }
+
+    .login .nav{
+        height: 10px;
+    }
+
+    section.cont.adm.login {
+        gap: 0px;
+    }
+
+    section.cont.adm.login form{
+        margin-top: 20px;
+    }
+    section.cont.adm.login form .label {
+       display: flex;
+       width: 100%;
+       justify-content: space-between;
+    }
+
+    .authenticated .img-cont{
+        height: 80%!important;
+        margin: 0;
+    }
+
+    .btn-adm.go-to-page {
+        font-size: 12px;
+        padding: 3px 5px;
+    }
+
+    .cont.adm.login.authenticated {
+        justify-content: flex-start;
+    }
+
+    .cont.adm.login.authenticated .nav-lis {
+        height: 35px !important;
+    }
+
+    .cont.adm.login.authenticated .container {
+        height: auto;
+        margin-top: 10px;
+      }
+    .cont.adm.login.authenticated h1 span {
+        font-size: 11px!important;
+    }
+
+    .cont.adm.login.authenticated ul{
+        padding: 0!important;
+    }
+
+    .cont.adm.login.authenticated ul li{
+        font-size: 13px;
+    }
+
+    .cont.adm.login.authenticated ul li button{
+        font-size: 10px;
+    }
+
+    .opc-adm, .opc-render {
+        padding-right: 10px;
+    }
+
+    .opc-render .content h5{
+        font-size: 12px!important;
+    }
+
+    .opc-render .content{
+        font-size: 12px!important;
+    }
+
+    .opc-render .content form {
+        margin-top: 0!important;
+    }
+
+    .opc-render .content label{
+        font-size: 12px!important;
+    }
+    .opc-render .content input{
+        width: 90%;
+    }
+
+    .opc-render .content .summary-cont div, .opc-render .content .summary-cont p{
+        gap: 2px;
+        font-size: 11px;
+        margin: 0;
+    }
+
+    .opc-render .content .row{
+        flex-direction: column;
+        font-size: 12px;
+        gap: 5px; 
+    }
+
+    .opc-render .content .row p{
+        font-size: 12px;
+    }
+
+    form.shipmets div {
+        flex-direction: column;
+    }
+
+    form.shipmets div input {
+       font-size: 12px;
+    }
+
+    button.submit{
+        width: auto;
+        letter-spacing: 0;
+        font-size: 12px;
+    }
+
+    .orders-cont .title{
+        height: 20px;
+        padding: 0;
+    }
+    .orders-cont h3{
+        font-size: 15px;
+    }
+
+    span.order-head p, .order-cont span p {
+        min-width: 20%;
+    }
+
+    .new-order-alert {
+        right: 40px;
+    }
+
+    button.delete {
+        position: absolute;
+        right: -25px;
+    }
+
+    button.delete img{
+        height: 70%;
+    }
+
+
+    .footer.adm {
+       display: none;
+    }
 }

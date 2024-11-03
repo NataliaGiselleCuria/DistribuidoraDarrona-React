@@ -53,6 +53,7 @@ const Home = ({ setTableType }) => {
       <section className='cont-mobile'>
         <Mobile/>
       </section>
+      
       <Footer/>
     </div>
   );

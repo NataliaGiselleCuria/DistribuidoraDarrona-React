@@ -6,7 +6,9 @@ import ListaDePrecios from './Components/listaDePrecios/ListaDePrecios';
 import Login from './Components/Login/Login';
 
 function App() {
-  const { tableType, setTableType } = useContext(DataContext)
+  const context = useContext(DataContext);
+
+  const { tableType, setTableType } = context;
 
   return (
     
@@ -17,7 +19,7 @@ function App() {
           <Route path="/login" element={<Login/>} />
         </Routes>
       </BrowserRouter>
-
+      
   );
 }
 

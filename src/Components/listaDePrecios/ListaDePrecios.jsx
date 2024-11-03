@@ -35,6 +35,9 @@ const ListaDePrecios = ({ tableType }) => {
       return <p className='minimum-purchase'>CARGANDO MINIMO DE COMPRA</p>;
     }
     const typeBuyer = amounts.find((amount) => amount.categoría === tableType);
+    if (!typeBuyer) {
+      return <p className='minimum-purchase'>No se encontró el mínimo de compra para esta categoría.</p>;
+    }
     return <p className='minimum-purchase'>{typeBuyer.mensaje}</p>;
   };
 
@@ -96,7 +99,7 @@ const ListaDePrecios = ({ tableType }) => {
                 <button className='button-list' onClick={handleVerPedidoClick}>
                   {showOrder ? "Volver" : "Ver pedido"}
                 </button>
-                <button className='button-list' onClick={handleFinalizarClick}>Finalizar</button>
+                <button className='button-list' onClick={handleFinalizarClick}><a href="#form">Finalizar</a></button>
               </>
             )}
           </div>
@@ -139,5 +142,4 @@ const ListaDePrecios = ({ tableType }) => {
     </div>
   );
 };
-
 export default ListaDePrecios;

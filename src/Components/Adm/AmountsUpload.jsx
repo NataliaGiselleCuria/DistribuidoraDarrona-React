@@ -3,7 +3,9 @@ import { useApi } from '../../Context/ApiProvider';
 
 const AmountsUpload = () => {
 
-    const { amounts, amountsValues, isLoading, dev, prod } = useApi();
+    const { amounts, updateAmounts, amountsValues, updateAmountsValues, isLoading, dev, prod } = useApi();
+    const [showModal, setShowModal] = useState(false);
+    const [message, setMessage] = useState('');
 
     //msg
     const [newMinorista, setNewMinorista] = useState('');
@@ -18,7 +20,6 @@ const AmountsUpload = () => {
     const [newDistribuidorMin, setNewDistribuidorMin] = useState('');
     const [newDistribuidorMax, setNewDistribuidorMax] = useState('');
 
-    const [uploadStatus, setUploadStatus] = useState('');
 
     const getCategoryMessage = (category) => {
         const categoryData = amounts.find((item) => item.categoría === category);
@@ -51,28 +52,32 @@ const AmountsUpload = () => {
         const Data = {
             updatedAmounts,
             updatedAmountsValues
-        }
-
+        };
+    
         try {
-            const response = await fetch(`https://${dev}/API/index.php?action=save-order`, {
+            const response = await fetch(`${prod}/API/actualizar.php?action=amounts`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(Data)
             });
+    
+            const result = await response.json();
+    
+            if (result.success) {
 
-            const data = await response.json();
-
-            if (data.success) {
-                setUploadStatus(`Mensajes actualizados correctamente. \n\nMinorista: ${updatedAmounts.minorista}. \nMayorista: ${updatedAmounts.mayorista}. \nDistribuidor: ${updatedAmounts.distribuidor}.`);
+                setMessage(`<strong>Valores actualizados ✓</strong>\n\n<strong>Minorista</strong>: ${updatedAmounts.minorista}. \n<strong>Mayorista</strong>: ${updatedAmounts.mayorista}. \n<strong>Distribuidor</strong>: ${updatedAmounts.distribuidor}.`);
             } else {
-                setUploadStatus(`Error al actualizar los mensajes: ${data.error}`);
+                setMessage(`<strong>Error al actualizar los datos</strong>: ${result.error || 'undefined'}`);
             }
         } catch (error) {
-            setUploadStatus('Ocurrió un error al actualizar los mensajes.');
+            setMessage('<strong>Ocurrió un error al actualizar los datos</strong>.');
         }
 
+        setShowModal(true);
+        updateAmounts(updatedAmounts);
+        updateAmountsValues(updatedAmountsValues);
     };
 
     return (
@@ -96,26 +101,29 @@ const AmountsUpload = () => {
                         {isLoading ? <p>Cargando mensaje...</p> : <p className='current-msg'>"{getCategoryMessage('minorista')}"</p>}
                     </span>
                     <span className='row'>
-                        <label>Nuevo mensaje:</label>
+                        <label htmlFor='new-minorista'>Nuevo mensaje:</label>
                         <input
+                            id='new-minorista'
                             type="text"
                             value={newMinorista}
-                            onChange={(e) => {setNewMinorista(e.target.value); uploadStatus('')}}
+                            onChange={(e) => {setNewMinorista(e.target.value); setMessage('')}}
                         />
                     </span>
                     <span className='row price'>
-                    <label>Mínimo:</label>
+                    <label htmlFor='new-minorista-min'>Mínimo:</label>
                         <input
+                            id="new-minorista-min"
                             type="number"
                             value={newMinoristaMin}
-                            onChange={(e) => {setNewMinoristaMin(e.target.value); uploadStatus('')}}
+                            onChange={(e) => {setNewMinoristaMin(e.target.value); setMessage('')}}
                             placeholder={isLoading ? 'Cargando...' : getCategoryValue('minorista', 'minimo')}
                         />
-                         <label>Máximo:</label>
+                         <label htmlFor='new-minorista-max'>Máximo:</label>
                         <input
+                            id='new-minorista-max'
                             type="number"
                             value={newMinoristaMax}
-                            onChange={(e) => {setNewMinoristaMax(e.target.value); uploadStatus('')}}
+                            onChange={(e) => {setNewMinoristaMax(e.target.value); setMessage('')}}
                             placeholder={isLoading ? 'Cargando...' : getCategoryValue('minorista', 'maximo')}
                         />
                     </span>
@@ -127,26 +135,28 @@ const AmountsUpload = () => {
                         {isLoading ? <p>Cargando mensaje...</p> : <p className='current-msg'>"{getCategoryMessage('mayorista')}"</p>}
                     </span>
                     <span className='row'>
-                        <label>Nuevo mensaje:</label>
+                        <label htmlFor='new-mayorista'>Nuevo mensaje:</label>
                         <input
                             type="text"
                             value={newMayorista}
-                            onChange={(e) =>{setNewMayorista(e.target.value); uploadStatus('')}}
+                            onChange={(e) =>{setNewMayorista(e.target.value); setMessage('')}}
                         />
                     </span>
                     <span className='row price'>
-                    <label>Mínimo:</label>
+                    <label htmlFor='new-mayorista-min'>Mínimo:</label>
                         <input
+                            id='new-mayorista-min'
                             type="number"
                             value={newMayoristaMin}
-                            onChange={(e) => {setNewMayoristaMin(e.target.value); uploadStatus('')}}
+                            onChange={(e) => {setNewMayoristaMin(e.target.value); setMessage('')}}
                             placeholder={isLoading ? 'Cargando...' : getCategoryValue('mayorista', 'minimo')}
                         />
-                         <label>Máximo:</label>
+                         <label htmlFor='new-mayorista-max'>Máximo:</label>
                         <input
+                            id='new-mayorista-max'
                             type="number"
                             value={newMayoristaMax}
-                            onChange={(e) => {setNewMayoristaMax(e.target.value); uploadStatus('')}}
+                            onChange={(e) => {setNewMayoristaMax(e.target.value); setMessage('')}}
                             placeholder={isLoading ? 'Cargando...' : getCategoryValue('mayorista', 'maximo')}
                         />
                     </span>
@@ -158,33 +168,44 @@ const AmountsUpload = () => {
                         {isLoading ? <p>Cargando mensaje...</p> : <p className='current-msg'>"{getCategoryMessage('distribuidor')}"</p>}
                     </span>
                     <span className='row'>
-                        <label>Nuevo mensaje:</label>
+                        <label htmlFor='new-distribuidor'>Nuevo mensaje:</label>
                         <input
+                            id='new-distribuidor'
                             type="text"
                             value={newDistribuidor}
-                            onChange={(e) => {setNewDistribuidor(e.target.value); uploadStatus('')}}
+                            onChange={(e) => {setNewDistribuidor(e.target.value); setMessage('')}}
                         />
                     </span>
                     <span className='row price'>
-                    <label>Mínimo:</label>
+                    <label htmlFor='new-dist-min'>Mínimo:</label>
                         <input
+                            id='new-dist-min'
                             type="number"
                             value={newDistribuidorMin}
-                            onChange={(e) => {setNewDistribuidorMin(e.target.value); uploadStatus('')}}
+                            onChange={(e) => {setNewDistribuidorMin(e.target.value); setMessage('')}}
                             placeholder={isLoading ? 'Cargando...' : getCategoryValue('distribuidor', 'minimo')}
                         />
-                         <label>Máximo:</label>
+                         <label htmlFor='new-dist-max'>Máximo:</label>
                         <input
+                            id='new-dist-max'
                             type="number"
                             value={newDistribuidorMax}
-                            onChange={(e) => {setNewDistribuidorMax(e.target.value); uploadStatus('')}}
+                            onChange={(e) => {setNewDistribuidorMax(e.target.value); setMessage('')}}
                             placeholder={isLoading ? 'Cargando...' : getCategoryValue('distribuidor', 'maximo')}
                         />
                     </span>
                 </div>
                 <button className="submit" type="submit">Actualizar</button>
             </form>
-            <textarea readOnly value={uploadStatus} rows={4} cols={50} />
+            {showModal && (
+                <div className='modal-overlay'>
+                    <div className='modal-content'>
+                        <button className='button-list close' onClick={() => setShowModal(false)}>x</button>
+                        <p dangerouslySetInnerHTML={{ __html: message.replace(/\n/g, '<br>') }}></p>
+                        <button className='button-list' onClick={() => setShowModal(false)}>OK</button>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }

@@ -20,7 +20,7 @@ const Footer = ({ closeInfo, visible }) => {
   return (
     <div className={`footer ${visible ? 'visible' : ''}`}>
       <div className='footer-cont'>
-        <button className="close-btn" onClick={closeInfo}><i className="arrow down"></i></button>
+       
         <div className='column'>
           <h4>INFO</h4>
           <span><p>{isLoading ? 'Cargando...' : getContactValue('direccion')}</p></span>
@@ -46,7 +46,13 @@ const Footer = ({ closeInfo, visible }) => {
             <a href='https://www.instagram.com/distribuidoradarrona/'><img src={ig} alt="logo de instagram"></img></a>
           </span>
         </div>
+       
       </div>
+      <div class="copy">
+        <p>Copyright © 2024 <b>Distribuidora Darrona</b></p>
+        <p><b><a href='https://nataliacuria-dev.netlify.app/'>Natalia Curia</a></b> | Desarrollo Web</p>
+      </div>
+      <button className="close-btn" onClick={closeInfo}><i className="arrow down"></i></button>
     </div>
   );
 }

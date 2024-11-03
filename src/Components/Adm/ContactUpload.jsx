@@ -3,8 +3,9 @@ import { useApi } from '../../Context/ApiProvider';
 
 const ContactUpload = () => {
 
-    const { contact, isLoading, dev, prod } = useApi();
-    const [uploadStatus, setUploadStatus] = useState('');
+    const { contact, updateContact, isLoading, dev, prod } = useApi();
+    const [showModal, setShowModal] = useState(false);
+    const [message, setMessage] = useState('');
 
     const [newDirecc, setNewDirecc] = useState('');
     const [newTel, setNewTel] = useState('');
@@ -25,11 +26,11 @@ const ContactUpload = () => {
             direccion: newDirecc || getCategoryMessage('direccion'),
             telefono: newTel || getCategoryMessage('telefono'),
             email: newEmail || getCategoryMessage('email'),
-            entrega: newShipment || getCategoryMessage('entrega')
+            entrega: newShipment || getCategoryMessage('entregas')
         };
 
         try {
-            const response = await fetch(`https://${dev}/API/index.php?action=shipments`, {
+            const response = await fetch(`${prod}/API/actualizar.php?action=contact`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -40,13 +41,16 @@ const ContactUpload = () => {
             const data = await response.json();
 
             if (data.success) {
-                setUploadStatus(`Mensajes actualizados correctamente. \n\nDireccion: ${updatedInfo.direccion}. \nTeléfono: ${updatedInfo.telefono}. \nEmail: ${updatedInfo.email}.  \nEntregas: ${updatedInfo.entrega}`);
+                setMessage(`<strong>Información actualizada correctamente  ✓</strong> \n\n<strong>Direccion</strong>: ${updatedInfo.direccion}. \n<strong>Teléfono</strong>: ${updatedInfo.telefono}. \n<strong>Email</strong>: ${updatedInfo.email}.  \n<strong>Entregas</strong>: ${updatedInfo.entrega}`);
+                updateContact(updatedInfo);
             } else {
-                setUploadStatus(`Error al actualizar la información: ${data.error}`);
+                setMessage(`<strong>Error al actualizar la información</strong>: ${data.error}`);
             }
         } catch (error) {
-            setUploadStatus('Ocurrió un error al actualizar la información.');
+            setMessage('<strong>Ocurrió un error al actualizar la información</strong>.');
         }
+
+        setShowModal(true);
 
     };
 
@@ -62,11 +66,12 @@ const ContactUpload = () => {
                         {isLoading ? <p>Cargando mensaje...</p> : <p className='current-msg'>"{getCategoryMessage('direccion')}"</p>}
                     </span>
                     <span className='row'>
-                        <label>Nuevo mensaje:</label>
+                        <label htmlFor='new-direcc'>Nuevo mensaje:</label>
                         <input
+                            id='new-direcc'
                             type="text"
                             value={newDirecc}
-                            onChange={(e) => {setNewDirecc(e.target.value); uploadStatus('')}}
+                            onChange={(e) => {setNewDirecc(e.target.value); setMessage('')}}
                         />
                     </span>
                 </div>
@@ -77,11 +82,12 @@ const ContactUpload = () => {
                         {isLoading ? <p>Cargando mensaje...</p> : <p className='current-msg'>"{getCategoryMessage('telefono')}"</p>}
                     </span>
                     <span className='row'>
-                        <label>Nuevo mensaje:</label>
+                        <label htmlFor='new-tel'>Nuevo mensaje:</label>
                         <input
+                            id='new-tel'
                             type="text"
                             value={newTel}
-                            onChange={(e) => {setNewTel(e.target.value); uploadStatus('')}}
+                            onChange={(e) => {setNewTel(e.target.value); setMessage('')}}
                         />
                     </span>
                 </div>
@@ -92,11 +98,12 @@ const ContactUpload = () => {
                         {isLoading ? <p>Cargando mensaje...</p> : <p className='current-msg'>"{getCategoryMessage('email')}"</p>}
                     </span>
                     <span className='row'>
-                        <label>Nuevo mensaje:</label>
+                        <label htmlFor='new-email'>Nuevo mensaje:</label>
                         <input
+                            id='new-email'
                             type="text"
                             value={newEmail}
-                            onChange={(e) => {setNewEmail(e.target.value); uploadStatus('')}}
+                            onChange={(e) => {setNewEmail(e.target.value); setMessage('')}}
                         />
                     </span>
                 </div>
@@ -107,17 +114,26 @@ const ContactUpload = () => {
                         {isLoading ? <p>Cargando mensaje...</p> : <p className='current-msg'>"{getCategoryMessage('entregas')}"</p>}
                     </span>
                     <span className='row'>
-                        <label>Nuevo mensaje:</label>
+                        <label htmlFor='new-shipment'>Nuevo mensaje:</label>
                         <input
+                            id='new-shipment'
                             type="text"
                             value={newShipment}
-                            onChange={(e) => {setNewShipment(e.target.value); uploadStatus('')}}
+                            onChange={(e) => {setNewShipment(e.target.value); setMessage('')}}
                         />
                     </span>
                 </div>
                 <button className="submit" type="submit">Actualizar</button>
             </form>
-            <textarea readOnly value={uploadStatus} rows={4} cols={50} />
+            {showModal && (
+                <div className='modal-overlay'>
+                    <div className='modal-content'>
+                        <button className='button-list close' onClick={() => setShowModal(false)}>x</button>
+                        <p dangerouslySetInnerHTML={{ __html: message.replace(/\n/g, '<br>') }}></p>
+                        <button className='button-list' onClick={() => setShowModal(false)}>OK</button>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }

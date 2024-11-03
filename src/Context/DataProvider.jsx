@@ -5,7 +5,7 @@ export const DataContext = createContext();
 
 export const DataProvider = ({ children }) => {
 
-  const { products } = useApi();
+  const { products, isLoading } = useApi();
 
 
   //Productos filtrados por buscador.
@@ -20,14 +20,15 @@ export const DataProvider = ({ children }) => {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    const extractedCategories = products.map(item => item.Categoría).filter(Boolean);
-    const uniqueCategories = Array.from(new Set(extractedCategories));
-
-    if (uniqueCategories.length > 0) {
-      setCategories(uniqueCategories);
-    }     
-
-  }, [products]);
+    if (!isLoading) { // Check if not loading
+      const extractedCategories = products.map(item => item.Categoría).filter(Boolean);
+      const uniqueCategories = Array.from(new Set(extractedCategories));
+  
+      if (uniqueCategories.length > 0) {
+        setCategories(uniqueCategories);
+      }
+    }
+  }, [products, isLoading]);
 
 
   //Guardar la eleccion de consumidor del Home en LS.
@@ -47,6 +48,7 @@ export const DataProvider = ({ children }) => {
     setCategories,
     tableType, 
     setTableType,
+    isLoading,
   }), 
   [
     categories, 
@@ -57,6 +59,7 @@ export const DataProvider = ({ children }) => {
     setCategories,
     tableType, 
     setTableType,
+    isLoading,
   ]);
 
   return (

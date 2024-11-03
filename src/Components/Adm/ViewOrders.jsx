@@ -59,7 +59,7 @@ const ViewOrders = () => {
 
   return (
     <div>
-       <span className="title"><img src={img}/><h3>Lista de Pedidos</h3></span>
+       <span className="title"><img src={img} alt="almendras"/><h3>Lista de Pedidos</h3></span>
            <ul>
            <li className="list-orders-head">
                         <div className='order-cont'>
@@ -101,29 +101,29 @@ const ViewOrders = () => {
                                                 <tr>
                                                     <th>Código</th>
                                                     <th>Producto</th>
-                                                    <th>Presentación</th>
-                                                    <th>Peso</th>
-                                                    <th>Cantidad x Pres.</th>
-                                                    <th>Cantidad</th>
-                                                    <th>Total</th>
+                                                    <th className='center'>Pres.</th>
+                                                    <th className='center'>Peso</th>
+                                                    <th className='center'>Cant x Pres.</th>
+                                                    <th className='center'>Cantidad</th>
+                                                    <th className='center'>Total</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 {JSON.parse(order?.detalle || '[]')?.map((item, idx) => (
                                                     <tr key={idx}>
-                                                        <td>{item?.product?.Código}</td>
+                                                        <td className='small'>{item?.product?.Código}</td>
                                                         <td>{item?.product?.Producto}</td>
-                                                        <td>{item?.product?.Presentación}</td>
-                                                        <td>{item?.product?.Peso}</td>
-                                                        <td>{item?.product?.['Cantidad x pres.']}</td>
-                                                        <td>{item?.quantity}</td>
-                                                        <td>${item?.totalProduct?.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</td>
+                                                        <td className='center small'>{item?.product?.Presentación}</td>
+                                                        <td className='center small'>{item?.product?.Peso}</td>
+                                                        <td className='center small'>{item?.product?.['Cantidad x pres.']}</td>
+                                                        <td className='center'>{item?.quantity}</td>
+                                                        <td className='center'>${item?.totalProduct?.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</td>
                                                     </tr>
                                                 ))}
                                             </tbody>
                                         </table>
                                     </span>
-                                    <button onClick={() => downloadOrderAsExcel(order)}> <img src={dw} alt="Descargar"/>Descargar pedido en Excel</button>
+                                    <button className="download-order"onClick={() => downloadOrderAsExcel(order)}> <img src={dw} alt="Descargar"/>Descargar pedido en Excel</button>
                                 </>
                             )}
                         </div>

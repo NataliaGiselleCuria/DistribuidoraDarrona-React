@@ -7,18 +7,20 @@ const LoginUpload = () => {
   const [newUser, setNewUser] = useState('');
   const [newPass, setNewPass] = useState('');
 
-  const [uploadStatus, setUploadStatus] = useState('');
+  const [showModal, setShowModal] = useState(false);
+  const [message, setMessage] = useState('');
 
   const handleUpdate = async (e) => {
     e.preventDefault();
 
     if (!newUser || !newPass) {
-        setUploadStatus('Por favor, complete ambos campos: Usuario y Contraseña.');
+        setMessage('<strong>Por favor, complete ambos campos: Usuario y Contraseña.</strong>');
+        setShowModal(true);
         return;
     }
 
     try {
-        const response = await fetch(`https://${dev}/API/actualizar.php?action=cred`, {
+        const response = await fetch(`${prod}/API/actualizar.php?action=cred`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -29,14 +31,17 @@ const LoginUpload = () => {
         const data = await response.json();
   
         if (data.success) {
-            setUploadStatus(`Usuario y contraseña actualizados correctamente. \n\nUsuario: ${newUser} \nClave: ${newPass}`);
+            setMessage(`<strong>Usuario y contraseña actualizados correctamente.</strong> \n\nUsuario: ${newUser} \nClave: ${newPass}`);
           
         } else {
-            setUploadStatus(`Error en actualizar usuario y contraseña: ${data.error}`);
+            setMessage(`<strong>Error en actualizar usuario y contraseña</strong>: ${data.error}`);
         }
       } catch (error) {
-        setUploadStatus('Ocurrió un error al actualizar las credenciales de inicio de sesión.');
+        setMessage('<strong>Ocurrió un error al actualizar las credenciales de inicio de sesión</strong>.');
       }
+
+      setShowModal(true);
+
     };
 
   return (
@@ -61,7 +66,15 @@ const LoginUpload = () => {
         </div>
         <button className="submit" type="submit">Actualizar</button>
       </form>
-      <textarea readOnly value={uploadStatus} rows={4} cols={50} />
+      {showModal && (
+                <div className='modal-overlay'>
+                    <div className='modal-content'>
+                        <button className='button-list close' onClick={() => setShowModal(false)}>x</button>
+                        <p dangerouslySetInnerHTML={{ __html: message.replace(/\n/g, '<br>') }}></p>
+                        <button className='button-list' onClick={() => setShowModal(false)}>OK</button>
+                    </div>
+                </div>
+            )}
     </div>
   );
 };

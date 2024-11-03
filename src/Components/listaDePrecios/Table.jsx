@@ -27,7 +27,7 @@ const Table = ( {showOrder, isFinalized} ) => {
     const formatPrice = (priceText) => {
       // Remover el signo de pesos y las comas, y convertir a número
       return parseFloat(priceText.replace(/[$.]/g, '').replace(/,/, '.'));
-  };
+    };
 
     const formatQuantity = (quantityText) => {
       // Convertir la cantidad a número (en caso de que también sea un texto)
@@ -37,7 +37,15 @@ const Table = ( {showOrder, isFinalized} ) => {
     const formatCurrency = (value) => {
       // Formatear el número al estilo 0.000,00 con signo de pesos
       return value.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' });
-  };
+    };
+
+    const addPesoSign = (priceText) => {
+      // Verificar si el precio está vacío o si no contiene el signo de pesos
+      if (priceText && !priceText.includes('$')) {
+        return `$${priceText}`;
+      }
+      return priceText;
+    };
 
     if (tableType === 'minorista') {
 
@@ -48,7 +56,7 @@ const Table = ( {showOrder, isFinalized} ) => {
       return (
         <>
           <td className='price'>{formatCurrency(precioPorUnidad)}</td>
-          <td className='price'>{product['minorista precio x presentación']}</td>
+          <td className='price'>{formatCurrency(addPesoSign(product['minorista precio x presentación']))}</td>
 
         </>
       );
@@ -61,7 +69,7 @@ const Table = ( {showOrder, isFinalized} ) => {
       return (
         <>
           <td className='price'>{formatCurrency(precioPorUnidad)}</td>
-          <td className='price'>{product['mayorista precio x presentación']}</td>
+          <td className='price'>{formatCurrency(addPesoSign(product['mayorista precio x presentación']))}</td>
         </>
       );
     } else if (tableType === 'distribuidor') {
@@ -73,7 +81,7 @@ const Table = ( {showOrder, isFinalized} ) => {
       return (
         <>
           <td className='price'>{formatCurrency(precioPorUnidad)}</td>
-          <td className='price'>{product['distribuidor precio x presentación']}</td>
+          <td className='price'>{formatCurrency(addPesoSign(product['distribuidor precio x presentación']))}</td>
         </>
       );
     }
@@ -104,7 +112,7 @@ const Table = ( {showOrder, isFinalized} ) => {
     const pricePerPresentation = parseFloat(product[productPrice].replace(/[$.]/g, '').replace(/,/, '.'));
     const totalPrice = pricePerPresentation * quantity;
     return totalPrice.toLocaleString('es-AR', { style: 'currency', currency: 'ARS' });
-};
+  };
 
 
   return (
@@ -117,11 +125,11 @@ const Table = ( {showOrder, isFinalized} ) => {
           <tr>
             <th className='cd'>CÓDIGO</th>
             <th className='th-prod'>PRODUCTO</th>
-            <th className='center'>U. de medida</th>
-            <th className='center'>Cant. x pres.</th>
-            <th className='center'>Peso X pres.</th>
+            <th className='center min'>U. de medida</th>
+            <th className='center min'>Cant. x pres.</th>
+            <th className='center min'>Peso x pres.</th>
             <th>Precio Unitario</th>
-            <th>Precio x pres.</th>
+            <th className="min">Precio x pres.</th>
             <th className='th-cant center highlight'>Cantidad</th>
             <th className='total'>Total x producto</th>
           </tr>
@@ -134,8 +142,8 @@ const Table = ( {showOrder, isFinalized} ) => {
               <td className='small cd'>{showOrder ? item.product.Código : item.Código}</td>
               <td>{showOrder ? item.product.Producto : item.Producto}</td>
               <td className='center small'>{showOrder ? item.product.Presentación : item.Presentación}</td>
-              <td className='center'>{showOrder ? item.product.Peso : item.Peso}</td>
-              <td className='center'>{showOrder ? item.product['Cantidad x pres.'] : item['Cantidad x pres.']}</td>
+              <td className='center min'>{showOrder ? item.product.Peso : item.Peso}</td>
+              <td className='center min'>{showOrder ? item.product['Cantidad x pres.'] : item['Cantidad x pres.']}</td>
               {renderTypeOfBuyerColumns(showOrder ? item.product : item)}
               <td>
               <input

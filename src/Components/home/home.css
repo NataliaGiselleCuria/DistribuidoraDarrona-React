@@ -5,9 +5,10 @@
     background-repeat: no-repeat;
     background-size: cover;
     justify-content: center;
+    align-items: center;
 }
 
-.img-cont {
+.home .img-cont, .cont.adm.login .img-cont {
     height: 25%;
 }
 
@@ -72,4 +73,46 @@ p.sub {
 
 .home .footer button{
     display: none;
+}
+
+
+@media only screen and (max-width: 968px) and (orientation: landscape) {
+
+    *{
+        -webkit-tap-highlight-color:none;
+    }
+
+    .home .nav, .login-nav{
+        height: 10px;
+    }
+
+    h1 {
+        font-size: 17px!important;
+    }
+
+    h1 span {
+        height: 20px;
+    }
+
+    .home .img-cont, .cont .adm .login .img-cont {
+        height: 20%!important;
+        margin-bottom: 5px;
+    }
+    
+    .buttons {
+        margin: 20px 0;
+        margin-bottom: 40px;
+        gap: 10px;
+    }
+    
+    .buttons button {
+        height: 40px;
+        width: 170px;
+        font-size: 15px;
+       
+    }
+
+    p.sub {
+       display: none;
+    }
 }

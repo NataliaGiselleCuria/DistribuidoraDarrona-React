@@ -1,22 +1,25 @@
 import React, { useState } from 'react';
 import { useApi } from '../../Context/ApiProvider';
+import excel from '../../excel/productos-plantilla-modelo.xlsx';
 
 const FileUpload = () => {
   const { dev, prod } = useApi()
   const [file, setFile] = useState(null);
-  const [uploadStatus, setUploadStatus] = useState('');
+  const [showModal, setShowModal] = useState(false);
+  const [message, setMessage] = useState('');
 
   const handleFileChange = (event) => {
     const uploadedFile = event.target.files[0];
     setFile(uploadedFile);
-    setUploadStatus('');
+    setMessage('');
   };
 
   const handleFileUpload = async (event) => {
     event.preventDefault();
 
     if (!file) {
-      setUploadStatus('Por favor, seleccione un archivo CSV');
+      setMessage('<strong>Por favor, seleccione un archivo CSV</strong>');
+      setShowModal(true);
       return;
     }
 
@@ -24,7 +27,7 @@ const FileUpload = () => {
     formData.append('fileInput', file);
 
     try {
-      const response = await fetch(`https://${dev}/API/upload.php`, {
+      const response = await fetch(`${prod}/API/upload.php`, {
         method: 'POST',
         body: formData
       });
@@ -32,16 +35,22 @@ const FileUpload = () => {
       const responseData = await response.json(); // Parsear la respuesta JSON
 
       if (response.ok && responseData.status === 'success') {
-        setUploadStatus('¡Archivo CSV subido exitosamente!');
+        setMessage('<strong>¡Archivo CSV subido exitosamente!</strong>');
+
       } else if (responseData && responseData.status === 'error') {
-        setUploadStatus(`Error: ${responseData.message}`);
+        setMessage(`<strong>Error</strong>: \n${responseData.message}`);
+
       } else {
-        setUploadStatus('Error al subir el archivo CSV. Por favor, intente de nuevo.');
+
+        setMessage('<strong>Error al subir el archivo CSV. Por favor, intente de nuevo.</strong>');
       }
+
     } catch (error) {
-      console.error('Error al subir el archivo CSV:', error);
-      setUploadStatus('Error al subir el archivo CSV. ' + error.message);
+      setMessage('<strong>Error al subir el archivo CSV.</strong> ' + error.message);
+
     }
+
+    setShowModal(true);
   };
 
   return (
@@ -55,20 +64,27 @@ const FileUpload = () => {
         <p>- No dejar casillas vacías.</p>
         <p>- Guardar y subir el archivo en formato CSV.</p>
       </div>
-      
+      <a href={excel} download="productos-plantilla-modelo.xlsx">
+        <button className="btn-adm">Descargar Exel</button>
+      </a>
       <form onSubmit={handleFileUpload} className='csv'>
-      <div>
-          <a href="excel/productos-plantilla-modelo.xlsx" download="productos-plantilla-modelo.xlsx">
-              <button className="btn-adm">Descargar Exel</button>
-          </a>
-          <label>
-            <input className="file" type="file" accept=".csv" name="fileInput" onChange={handleFileChange} />
+        <div>
+          <label htmlFor='fileInput'>
+            <input className="file" type="file" accept=".csv" name="fileInput" id='fileInput' onChange={handleFileChange} />
           </label>
-      </div>
-        
+        </div>
+
         <button className="submit" type="submit">Subir</button>
       </form>
-      <textarea readOnly value={uploadStatus} rows={4} cols={50} />
+      {showModal && (
+        <div className='modal-overlay'>
+          <div className='modal-content'>
+            <button className='button-list close' onClick={() => setShowModal(false)}>x</button>
+            <p dangerouslySetInnerHTML={{ __html: message.replace(/\n/g, '<br>') }}></p>
+            <button className='button-list' onClick={() => setShowModal(false)}>OK</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

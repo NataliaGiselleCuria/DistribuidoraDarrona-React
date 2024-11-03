@@ -8,7 +8,8 @@ const ShipmentsUpload = () => {
     const [newShipment, setNewShipment] = useState({ lugar: '', dia: '' });
     const [updatedShipments, setUpdatedShipments] = useState([]);
 
-    const [uploadStatus, setUploadStatus] = useState('');
+    const [showModal, setShowModal] = useState(false);
+    const [message, setMessage] = useState('');
 
     useEffect(() => {
         if (!isLoading) {
@@ -19,27 +20,27 @@ const ShipmentsUpload = () => {
     const handleAdd = () => {
         setUpdatedShipments([...updatedShipments, newShipment]);
         setNewShipment({ lugar: '', dia: '' });
-        setUploadStatus('');
+        setMessage('');
     };
 
     const handleDelete = (index) => {
         const newShipments = [...updatedShipments];
         newShipments.splice(index, 1);
         setUpdatedShipments(newShipments);
-        setUploadStatus('');
+        setMessage('');
     };
 
     const handleChange = (index, field, value) => {
         const newShipments = [...updatedShipments];
         newShipments[index][field] = value;
         setUpdatedShipments(newShipments);
-        setUploadStatus('');
+        setMessage('');
     };
 
     const handleUpdate = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch(`https://${dev}/API/actualizar.php?action=shipments`, {
+            const response = await fetch(`${prod}/API/actualizar.php?action=shipments`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -48,21 +49,23 @@ const ShipmentsUpload = () => {
             });
             const data = await response.json();
             if (data.success) {
-                setUploadStatus('Lugares y días de entrega actualizados correctamente.');
+                setMessage('<strong>Lugares y días de entrega actualizados correctamente</strong>.');
             } else {
-                setUploadStatus(`Error al actualizar: ${data.error}`);
+                setMessage(`<strong>Error al actualizar</strong>: ${data.error}`);
             }
         } catch (error) {
-            setUploadStatus('Ocurrió un error al actualizar.');
+            setMessage('<strong>Ocurrió un error al actualizar</strong>.');
         }
+
+        setShowModal(true);
     };
 
-    
 
-  return (
-    <div className='content'>
-    <h5>Actualizar lugares y dias de entrega.</h5>
-    {isLoading ? (
+
+    return (
+        <div className='content'>
+            <h5>Actualizar lugares y dias de entrega.</h5>
+            {isLoading ? (
                 <p></p>
             ) : (
                 <form className='shipmets' onSubmit={handleUpdate}>
@@ -101,10 +104,18 @@ const ShipmentsUpload = () => {
                     <button className="submit" type="submit">Actualizar</button>
                 </form>
             )}
-   
-    <textarea readOnly value={uploadStatus} rows={4} cols={50} />
-  </div>
-  )
+
+            {showModal && (
+                <div className='modal-overlay'>
+                    <div className='modal-content'>
+                        <button className='button-list close' onClick={() => setShowModal(false)}>x</button>
+                        <p dangerouslySetInnerHTML={{ __html: message.replace(/\n/g, '<br>') }}></p>
+                        <button className='button-list' onClick={() => setShowModal(false)}>OK</button>
+                    </div>
+                </div>
+            )}
+        </div>
+    )
 }
 
 export default ShipmentsUpload

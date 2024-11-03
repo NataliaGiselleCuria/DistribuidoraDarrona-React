@@ -36,7 +36,7 @@ const Login = () => {
 
     return (
         <>
-            <div className="nav"></div> 
+            <div className="nav login-nav"></div> 
             <section className={`cont adm login ${isAuthenticated ? 'authenticated' : ''}`}>
             {!isAuthenticated ? (
                 <>
